@@ -1,0 +1,8 @@
+# Example projects list file
+# One GitHub URL per line
+# Lines starting with # are ignored
+# Empty lines are ignored
+
+# IMPORTANT: Preconfigured macros MUST be included in this list
+https://github.com/TinyTapeout/tt-chip-rom
+https://github.com/TinyTapeout/ttsky26c-factory-test

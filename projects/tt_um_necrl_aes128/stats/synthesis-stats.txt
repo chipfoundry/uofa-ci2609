@@ -1,0 +1,5 @@
+=== tt_um_necrl_aes128 ===
+
+Number of cells:            25607
+
+       Chip area for module '\tt_um_necrl_aes128': 149183.000000

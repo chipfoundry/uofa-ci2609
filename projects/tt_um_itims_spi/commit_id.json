@@ -1,0 +1,9 @@
+{
+  "app": "uofa-ci2609 import",
+  "repo": "https://github.com/parsamrf/AI-HDL-Tape-out-Chipfoundry",
+  "commit": "a02bebb84456e48a6f411218cd36dfa155a9385a",
+  "workflow_url": null,
+  "sort_id": 1779555000002,
+  "flow_version": "LibreLane 3.0.5",
+  "source_folder": "itims-spi"
+}

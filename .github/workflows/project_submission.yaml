@@ -1,0 +1,114 @@
+name: project_submission
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - projects/tt_um_*/**
+
+jobs:
+  check_submission:
+    name: Check user project submission
+    runs-on: ubuntu-24.04
+    env:
+      TT_CONFIG: sky130.yaml:../../mux_overrides.yaml
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v7
+        with:
+          submodules: recursive
+
+      - name: setup python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      - run: pip install -r tt-multiplexer/py/requirements.txt -r tt/requirements.txt
+
+      - name: Update caravel configuration
+        run: python ./tt/configure.py --update-shuttle
+
+      - name: upload shuttle_index.json
+        if: success() || failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: shuttle_index
+          path: shuttle_index.json
+
+  precheck:
+    name: Run precheck
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    env:
+      PDK_ROOT: '/home/runner/pdk'
+      PDK_VERSION: '0536d02d875c8f67dd7cca3902ac457e62f20005'
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v7
+        with:
+          submodules: recursive
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        shell: bash
+        working-directory: tt/precheck
+        run: pip install -r requirements.txt
+
+      - name: Install Sky130 PDK
+        uses: TinyTapeout/ciel-action@v1
+        with:
+          pdk_name: sky130
+          pdk_version: ${{ env.PDK_VERSION }}
+          pdk_root: ${{ env.PDK_ROOT }}
+
+      - name: Install Nix
+        uses: rikhuijzer/cache-install@v1.1.4
+        with:
+          key: nix-${{ hashFiles('precheck/default.nix') }}
+          nix_file: 'tt/precheck/default.nix'
+
+      - name: Build Nix packages
+        shell: bash
+        working-directory: tt/precheck
+        run: nix-build
+
+      - name: Get all project OAS files that have changed
+        id: changed-files
+        uses: tj-actions/changed-files@v47
+        with:
+          files: projects/tt_um_*/*.oas
+
+      - name: Run precheck
+        shell: bash
+        working-directory: tt/precheck
+        if: steps.changed-files.outputs.any_changed == 'true'
+        env:
+          OAS_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
+        run: |
+          for oas_file in $OAS_FILES; do
+            nix-shell --run "python precheck.py --gds ${{ github.workspace }}/${oas_file}"
+          done
+
+      - name: Test Summary
+        uses: test-summary/action@v2.6
+        with:
+          paths: 'tt/precheck/reports/results.xml'
+        if: (success() || failure()) && steps.changed-files.outputs.any_changed == 'true'
+
+      - name: Capture test results
+        shell: bash
+        working-directory: tt/precheck
+        if: (success() || failure()) && steps.changed-files.outputs.any_changed == 'true'
+        run: cat reports/results.md >> $GITHUB_STEP_SUMMARY
+
+      - name: Upload reports
+        if: (success() || failure()) && steps.changed-files.outputs.any_changed == 'true'
+        uses: actions/upload-artifact@v7
+        with:
+          name: precheck-reports
+          path: tt/precheck/reports

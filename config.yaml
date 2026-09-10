@@ -1,0 +1,11 @@
+id: 'ci2609'
+name: 'University of Arizona CI2609'
+pdk: 'sky130A'
+end_date: '2026-09-16'
+project_dir: 'projects'
+top_level_macro: 'openframe_project_wrapper'
+powered_netlists: true
+
+datasheet_config:
+  theme_override_colour: tt.colours.THEME_SKY_BLUE
+  link_override_colour: tt.colours.THEME_SKY_BLUE

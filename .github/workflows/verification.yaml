@@ -1,0 +1,57 @@
+name: verification
+
+on:
+  workflow_dispatch:
+  push:
+    # Don't run on project submissions:
+    branches-ignore:
+      - projects/tt_um_*
+  pull_request:
+    # Don't run on project submissions:
+    paths-ignore:
+      - projects/tt_um_*/**
+
+jobs:
+  verification:
+    env:
+      SKY130_PDK_VERSION: 1341f54f5ce0c4955326297f235e4ace1eb6d419
+      PDK_ROOT: /home/runner/pdk
+      TT_CONFIG: sky130.yaml
+
+    # ubuntu
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v7
+        with:
+          submodules: recursive
+
+      # Set Python up
+      - name: setup python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      - run: pip install -r tt/requirements.txt -r tt-multiplexer/py/requirements.txt -r verilog/dv/mux/requirements.txt
+
+      - name: Install sky130A PDK
+        uses: TinyTapeout/ciel-action@v1
+        with:
+          pdk_version: ${{ env.SKY130_PDK_VERSION }}
+          pdk_root: ${{ env.PDK_ROOT }}
+
+      - name: install iverilog
+        run: sudo apt-get update && sudo apt-get install -y iverilog
+
+      - name: Configure the multiplexer for testing
+        run: python ./tt/configure.py --update-shuttle --test
+
+      # run first set of tests
+      - name: Mux simulation
+        working-directory: verilog/dv/mux
+        env:
+          EXPECTED_REPO: ${{ github.repository }}
+        run: |
+          make clean test_mux
+          # make will return success even if the test fails, so check for failure in the results.xml
+          ! grep failure results.xml

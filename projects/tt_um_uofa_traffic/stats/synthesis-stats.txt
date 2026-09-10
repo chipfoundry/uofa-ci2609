@@ -1,0 +1,5 @@
+=== tt_um_uofa_traffic ===
+
+Number of cells:            2251
+
+       Chip area for module '\tt_um_uofa_traffic': 16493.300000

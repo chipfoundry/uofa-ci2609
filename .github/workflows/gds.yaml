@@ -1,0 +1,207 @@
+name: gds
+
+on:
+  workflow_dispatch:
+  push:
+    # Don't run on project submissions:
+    branches-ignore:
+      - projects/tt_um_*
+  pull_request:
+    # Don't run on project submissions:
+    paths-ignore:
+      - projects/tt_um_*/**
+
+jobs:
+  gds:
+    env:
+      PYTHONIOENCODING: utf-8
+      PDK_ROOT: ${{ github.workspace }}/pdk
+      TT_CONFIG: sky130.yaml:../../mux_overrides.yaml
+      # Uncomment the following line to build only the specified projects:
+      #TT_ONLY_PROJECTS: tt_um_chip_rom,tt_um_factory_test
+
+    runs-on: ubuntu-24.04
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v7
+        with:
+          submodules: recursive
+
+      - name: Free Disk Space (Ubuntu)
+        uses: jlumbroso/free-disk-space@main
+        with:
+          large-packages: false
+          docker-images: false
+          swap-storage: false
+          android: false
+
+      - name: setup python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      - run: pip install -r tt-multiplexer/py/requirements.txt -r tt/requirements.txt -r verilog/dv/mux/requirements.txt
+
+      - name: Load LibreLane environment variables
+        run: cat .github/config/librelane.txt | tee -a $GITHUB_ENV
+
+      - name: Checkout LibreLane repo
+        uses: actions/checkout@v7
+        with:
+          repository: librelane/librelane
+          path: librelane
+          ref: ${{ env.LIBRELANE_TAG }}
+
+      - name: Update caravel configuration
+        run: python ./tt/configure.py --update-shuttle
+
+      - name: Install Nix and configure FOSSi cache
+        uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |
+            extra-substituters = https://nix-cache.fossi-foundation.org
+            extra-trusted-public-keys = nix-cache.fossi-foundation.org:3+K59iFwXqKsL7BNu6Guy0v+uTlwsxYQxjspXzqLYQs=
+
+      - name: Install SKY130 PDK
+        uses: TinyTapeout/ciel-action@v1
+        with:
+          pdk_name: sky130
+          pdk_version: ${{ env.SKY130_PDK_VERSION }}
+          pdk_root: ${{ env.PDK_ROOT }}
+
+      # Drop obsm5 from the met5.2 rule to allow tt_um_oscillating_bones fill blockers.
+      - name: Patch magic DRC for FILLOBSM5 spacing rule
+        run: |
+          TECH=${PDK_ROOT}/sky130A/libs.tech/magic/sky130A.tech
+          sed -i -E \
+            -e 's|(spacing[[:space:]]+allm5[[:space:]]+allm5),obsm5(,m5fill)|\1\2|' \
+            "$TECH"
+
+      # Workaround for analog rpm.1 false positives.
+      # See https://github.com/librelane/librelane/issues/928
+      # and https://github.com/RTimothyEdwards/open_pdks/pull/504
+      - name: Disable rpm.1 check in sky130A.tech (false positives)
+        run: |
+          sed -i 's|^ cifwidth rpm_generate 1270 |# DISABLED for false positives: \0|' \
+            ${{ env.PDK_ROOT }}/sky130A/libs.tech/magic/sky130A.tech
+
+      # Patch all digital projects to work around the poly density issue
+      - name: Patch projects for poly density issue
+        working-directory: projects
+        run: |
+          for project in tt_um_*; do
+            if [ "$project" = "tt_um_chip_rom" ]; then
+              continue
+            fi
+
+            flow_name=""
+            if [ -f $project/pdk.json ]; then
+              flow_name=$(jq -r '.FLOW_NAME' $project/pdk.json)
+            else
+              flow_name=$(jq -r '.flow_version' $project/commit_id.json)
+              if [ "$flow_name" = "null" ]; then
+                flow_name=$(jq -r '.openlane_version' $project/commit_id.json)
+              fi
+            fi
+
+            # Skip projects that were not built with OpenLane2 or LibreLane (e.g. analog and mixed-signal projects)
+            if [[ "$flow_name" != "OpenLane2 "* ]] && \
+               [[ "$flow_name" != "LibreLane"* ]]; then
+              continue
+            fi
+            
+            if [ -f $project/$project.oas ]; then
+              python ../sky130_density_fix/replace_decap.py --design $project --user-gds $project/$project.oas --replacement-gds ../sky130_density_fix/sky130_tt_sc_hd__newfill_3.gds -p 0.1 | tee -a ../tt-multiplexer/ol2/tt_top/gds/replace_decap.log
+            fi
+          done
+
+      # Use LibreLane to build the macros and the final GDS
+      - name: Harden Chip ROM
+        run: nix-shell $GITHUB_WORKSPACE/librelane/shell.nix --run "python -m librelane tt/rom/config.json"
+
+      - name: Harden tt_ctrl
+        working-directory: tt-multiplexer/ol2/tt_ctrl
+        run: nix-shell $GITHUB_WORKSPACE/librelane/shell.nix --run "python build.py"
+
+      - name: Harden tt_mux
+        working-directory: tt-multiplexer/ol2/tt_mux
+        run: nix-shell $GITHUB_WORKSPACE/librelane/shell.nix --run "python build.py"
+
+      - name: Copy macros
+        run: python ./tt/configure.py --copy-macros
+
+      - name: Harden tt_top
+        working-directory: tt-multiplexer/ol2/tt_top
+        run: nix-shell $GITHUB_WORKSPACE/librelane/shell.nix --run "python build.py --skip-xor-checks"
+
+      - name: Copy final results
+        run: python ./tt/configure.py --copy-final-results
+
+      - name: Create foundry submission directory
+        run: python ./tt/configure.py --create-foundry-submission
+
+      - name: Patch GL power pin assignments
+        run: sed -i 's/^ assign \(v[a-z0-9]*\) = \(v[a-z]*\);$/ assign \1 = \2; assign \2 = \1;/' foundry_submission/verilog/gl/openframe_project_wrapper.v
+
+      - name: Add lvs_config.json to foundry submission
+        run: |
+          mkdir -p foundry_submission/lvs/openframe_project_wrapper
+          cp lvs/openframe_project_wrapper/lvs_config.json \
+             foundry_submission/lvs/openframe_project_wrapper/lvs_config.json
+
+      - name: upload GDS artifact
+        if: success() || failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: GDS
+          path: tt-multiplexer/ol2/tt_top/runs/RUN_*/*
+
+      - name: upload macros artifact
+        if: success() || failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: macros
+          path: |
+            tt-multiplexer/cfg/*.yaml
+            tt-multiplexer/ol2/tt_top/gds/*
+            tt-multiplexer/ol2/tt_top/lef/*
+            tt-multiplexer/ol2/tt_top/spef/*
+            tt-multiplexer/ol2/tt_top/verilog/*
+            tt-multiplexer/ol2/tt_mux/runs/RUN_*/*
+            tt-multiplexer/ol2/tt_ctrl/runs/RUN_*/*
+
+      - name: upload shuttle_index.json
+        if: success() || failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: shuttle_index
+          path: shuttle_index.json
+
+      - name: upload foundry submission directory
+        uses: actions/upload-artifact@v7
+        with:
+          name: foundry_submission
+          path: foundry_submission
+
+      # Install iverilog (required for GL simulation)
+      - name: install iverilog
+        run: sudo apt-get update && sudo apt-get install -y iverilog
+
+      - name: GL simulation
+        working-directory: verilog/dv/mux
+        env:
+          EXPECTED_REPO: ${{ github.repository }}
+        run: |
+          make clean test_mux_gl WAVES=yes
+          # make will return success even if the test fails, so check for failure in the results.xml
+          ! grep failure results.xml
+
+      - name: upload GL test results
+        if: success() || failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: gl_test_vcd
+          path: |
+            verilog/dv/mux/results.xml
+            verilog/dv/mux/test_mux.vcd
+            verilog/dv/mux/test_mux.gtkw

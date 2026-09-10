@@ -1,0 +1,94 @@
+{
+  "name": "University of Arizona CI2609",
+  "repo": "https://github.com/chipfoundry/uofa-ci2609.git",
+  "commit": "f897359b7172c6cb00f714e0d289d4070f86a282",
+  "commit_date": 1788812009,
+  "layout": {
+    "muxes": [
+      [
+        "digital",
+        "digital",
+        "digital",
+        "digital",
+        "digital",
+        "digital",
+        "digital",
+        "digital",
+        "digital",
+        "digital",
+        "digital",
+        "analog",
+        "digital",
+        "digital",
+        "digital",
+        "digital"
+      ],
+      [
+        "digital",
+        "digital",
+        "digital",
+        "digital",
+        "digital",
+        "analog",
+        "digital",
+        "digital",
+        "digital",
+        "digital",
+        "digital",
+        "digital",
+        "digital",
+        "digital",
+        "digital",
+        "digital"
+      ]
+    ]
+  },
+  "version": 3,
+  "projects": [
+    {
+      "macro": "tt_um_chip_rom",
+      "address": 0,
+      "x": 7,
+      "y": 15,
+      "tiles": "1x1",
+      "repo": "https://github.com/TinyTapeout/tt-chip-rom",
+      "commit": "bb743722e70e5313617c15b7d6f487745634a0fa"
+    },
+    {
+      "macro": "tt_um_factory_test",
+      "address": 1,
+      "x": 7,
+      "y": 14,
+      "tiles": "1x1",
+      "repo": "https://github.com/TinyTapeout/ttsky26c-factory-test",
+      "commit": "f10465e942be224635f027788dd6e36b07e48186"
+    },
+    {
+      "macro": "tt_um_uofa_traffic",
+      "address": 911,
+      "x": 0,
+      "y": 0,
+      "tiles": "1x1",
+      "repo": "https://github.com/parsamrf/AI-HDL-Tape-out-Chipfoundry",
+      "commit": "a02bebb84456e48a6f411218cd36dfa155a9385a"
+    },
+    {
+      "macro": "tt_um_itims_spi",
+      "address": 263,
+      "x": 4,
+      "y": 10,
+      "tiles": "2x2",
+      "repo": "https://github.com/parsamrf/AI-HDL-Tape-out-Chipfoundry",
+      "commit": "a02bebb84456e48a6f411218cd36dfa155a9385a"
+    },
+    {
+      "macro": "tt_um_necrl_aes128",
+      "address": 271,
+      "x": 0,
+      "y": 10,
+      "tiles": "4x2",
+      "repo": "https://github.com/parsamrf/AI-HDL-Tape-out-Chipfoundry",
+      "commit": "a02bebb84456e48a6f411218cd36dfa155a9385a"
+    }
+  ]
+}

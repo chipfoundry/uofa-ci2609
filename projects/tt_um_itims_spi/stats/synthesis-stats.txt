@@ -1,0 +1,5 @@
+=== tt_um_itims_spi ===
+
+Number of cells:            17112
+
+       Chip area for module '\tt_um_itims_spi': 72564.600000

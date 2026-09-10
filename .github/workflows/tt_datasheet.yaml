@@ -1,0 +1,95 @@
+name: tt_datasheet
+
+on:
+  workflow_dispatch:
+  push:
+    # Don't run on project submissions:
+    branches-ignore:
+      - projects/tt_um_*
+  pull_request:
+    # Don't run on project submissions:
+    paths-ignore:
+      - projects/tt_um_*/**
+
+jobs:
+  build_datasheet:
+    runs-on: ubuntu-24.04
+    env:
+      TT_CONFIG: sky130.yaml:../../mux_overrides.yaml
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v7
+        with:
+          submodules: true
+
+      - name: Setup python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      - run: pip install -r tt/requirements.txt -r tt-multiplexer/py/requirements.txt
+
+      - name: Install Pandoc
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y pandoc
+
+      - name: Download assets
+        run: |
+          git clone https://github.com/TinyTapeout/tt-datasheet-artwork tt/docs/typst/resources/external
+          wget -P tt/docs/typst/resources/fonts https://github.com/google/fonts/raw/refs/heads/main/ofl/notocoloremoji/NotoColorEmoji-Regular.ttf
+
+      - name: Install Typst
+        uses: typst-community/setup-typst@v5
+        with:
+            typst-version: '0.13.1'
+
+      - name: Generate datasheet files
+        run: python ./tt/configure.py --build-datasheet
+
+      - name: Check file existence and content
+        run: |
+          if [ ! -f "datasheet.pdf" ] || [ ! -s "datasheet.pdf" ]; then
+            echo "Datasheet generation failed."
+            exit 1
+          fi
+
+      - name: Archive PDF
+        uses: actions/upload-artifact@v7
+        with:
+          name: PDF
+          path: datasheet.pdf
+
+      - name: upload shuttle_index.json
+        if: success() || failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: shuttle_index
+          path: shuttle_index.json
+
+      - name: Prepare GitHub pages archive
+        run: |
+          mkdir gh_pages
+          cp datasheet.pdf shuttle_index.json gh_pages
+
+      - name: Upload 
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: 'gh_pages'
+
+  deploy_pages:
+    needs: build_datasheet
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

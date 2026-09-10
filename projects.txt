@@ -1,0 +1,10 @@
+# Required Tiny Tapeout system tiles
+https://github.com/TinyTapeout/tt-chip-rom
+https://github.com/TinyTapeout/ttsky26c-factory-test
+
+# Signed-off Tiny Tapeout tiles from:
+# https://github.com/parsamrf/AI-HDL-Tape-out-Chipfoundry
+# Imported from that collection (not separate GitHub repos):
+#   uofa-traffic     tt_um_uofa_traffic     1x1  University of Arizona
+#   itims-spi        tt_um_itims_spi        2x2  HUST/ITIMS
+#   necrl-aes128     tt_um_necrl_aes128     4x2  SFSU NeCRL
