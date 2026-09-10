@@ -1,6 +1,6 @@
 # University of Arizona CI2609
 
-This repository contains the GDS file for the [University of Arizona CI2609](https://tinytapeout.com) project. It was generated from https://github.com/chipfoundry/uofa-ci2609.git@f897359b7172c6cb00f714e0d289d4070f86a282.
+This repository contains the GDS file for the [University of Arizona CI2609](https://tinytapeout.com) project. It was generated from https://github.com/chipfoundry/uofa-ci2609.git@a1b28a91f5f8a953ff057d683cb054a62168e0b1.
 
 ## Project Index
 

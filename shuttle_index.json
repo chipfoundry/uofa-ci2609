@@ -1,8 +1,8 @@
 {
   "name": "University of Arizona CI2609",
   "repo": "https://github.com/chipfoundry/uofa-ci2609.git",
-  "commit": "f897359b7172c6cb00f714e0d289d4070f86a282",
-  "commit_date": 1788812009,
+  "commit": "a1b28a91f5f8a953ff057d683cb054a62168e0b1",
+  "commit_date": 1789057022,
   "layout": {
     "muxes": [
       [
