@@ -1,8 +1,8 @@
 {
   "name": "University of Arizona CI2609",
   "repo": "https://github.com/chipfoundry/uofa-ci2609.git",
-  "commit": "a1b28a91f5f8a953ff057d683cb054a62168e0b1",
-  "commit_date": 1789057022,
+  "commit": "5e0ce2d2980857a3b642751ad947e6a5b6da9fad",
+  "commit_date": 1789057047,
   "layout": {
     "muxes": [
       [
@@ -74,21 +74,129 @@
     },
     {
       "macro": "tt_um_itims_spi",
-      "address": 263,
-      "x": 4,
-      "y": 10,
+      "address": 622,
+      "x": 15,
+      "y": 24,
       "tiles": "2x2",
       "repo": "https://github.com/parsamrf/AI-HDL-Tape-out-Chipfoundry",
       "commit": "a02bebb84456e48a6f411218cd36dfa155a9385a"
     },
     {
       "macro": "tt_um_necrl_aes128",
-      "address": 271,
+      "address": 302,
       "x": 0,
-      "y": 10,
+      "y": 20,
       "tiles": "4x2",
       "repo": "https://github.com/parsamrf/AI-HDL-Tape-out-Chipfoundry",
       "commit": "a02bebb84456e48a6f411218cd36dfa155a9385a"
+    },
+    {
+      "macro": "tt_um_vec_coproc",
+      "address": 294,
+      "x": 4,
+      "y": 20,
+      "tiles": "4x2",
+      "repo": "https://github.com/parsamrf/AI-HDL-Tape-out-Chipfoundry.git",
+      "commit": "ac13fb6221b2f357a011680a7177a1de85996222"
+    },
+    {
+      "macro": "tt_um_bmi_soc",
+      "address": 46,
+      "x": 0,
+      "y": 16,
+      "tiles": "6x2",
+      "repo": "https://github.com/parsamrf/AI-HDL-Tape-out-Chipfoundry.git",
+      "commit": "d6f114baa6fd3a79c8a21b8ee78ca4a0e72a0972"
+    },
+    {
+      "macro": "tt_um_bmu_soc",
+      "address": 618,
+      "x": 13,
+      "y": 24,
+      "tiles": "6x2",
+      "repo": "https://github.com/parsamrf/AI-HDL-Tape-out-Chipfoundry.git",
+      "commit": "6ec4dcedc65fefe911d4175803c4f5e7caa4ac88"
+    },
+    {
+      "macro": "tt_um_mul_soc",
+      "address": 271,
+      "x": 0,
+      "y": 10,
+      "tiles": "8x2",
+      "repo": "https://github.com/parsamrf/AI-HDL-Tape-out-Chipfoundry.git",
+      "commit": "a819052e50a13cc9baa15e214e7a96432e70f9e8"
+    },
+    {
+      "macro": "tt_um_gpio_soc",
+      "address": 494,
+      "x": 15,
+      "y": 22,
+      "tiles": "8x2",
+      "repo": "https://github.com/parsamrf/AI-HDL-Tape-out-Chipfoundry.git",
+      "commit": "5c25688cea4a134c67c7a9087c04d24ba1c94864"
+    },
+    {
+      "macro": "tt_um_bp_soc",
+      "address": 239,
+      "x": 15,
+      "y": 19,
+      "tiles": "8x2",
+      "repo": "https://github.com/parsamrf/AI-HDL-Tape-out-Chipfoundry.git",
+      "commit": "48eca4e08a5eab32447eab9217631beea7a98efd"
+    },
+    {
+      "macro": "tt_um_vec_proc",
+      "address": 526,
+      "x": 0,
+      "y": 7,
+      "tiles": "8x2",
+      "repo": "https://github.com/parsamrf/AI-HDL-Tape-out-Chipfoundry.git",
+      "commit": "c07434d9402760ac945ff56dac3fb3f85e9095b1"
+    },
+    {
+      "macro": "tt_um_slm_dma",
+      "address": 655,
+      "x": 0,
+      "y": 4,
+      "tiles": "6x2",
+      "repo": "https://github.com/parsamrf/AI-HDL-Tape-out-Chipfoundry.git",
+      "commit": "2c019cae7f469d793534332527291e0d0e90ca8d"
+    },
+    {
+      "macro": "tt_um_slm_kv",
+      "address": 715,
+      "x": 13,
+      "y": 4,
+      "tiles": "6x2",
+      "repo": "https://github.com/parsamrf/AI-HDL-Tape-out-Chipfoundry.git",
+      "commit": "cbffeada2491d2eb3f4b2afb84e115bb43320975"
+    },
+    {
+      "macro": "tt_um_slm_softmax",
+      "address": 110,
+      "x": 15,
+      "y": 16,
+      "tiles": "8x2",
+      "repo": "https://github.com/parsamrf/AI-HDL-Tape-out-Chipfoundry.git",
+      "commit": "a0a8c7f88dd72cd7759ef9dcafa2d9fa02f650be"
+    },
+    {
+      "macro": "tt_um_slm_cpu",
+      "address": 463,
+      "x": 15,
+      "y": 8,
+      "tiles": "8x2",
+      "repo": "https://github.com/parsamrf/AI-HDL-Tape-out-Chipfoundry.git",
+      "commit": "00f821c5021a9891d00b0996f7dc1ab717b1c5b1"
+    },
+    {
+      "macro": "tt_um_slm_rmsnorm",
+      "address": 558,
+      "x": 0,
+      "y": 24,
+      "tiles": "8x2",
+      "repo": "https://github.com/parsamrf/AI-HDL-Tape-out-Chipfoundry.git",
+      "commit": "cab51ace90aeb0d38133fdf2eb9d5b8f1ebbaa23"
     }
   ]
 }

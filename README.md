@@ -20,23 +20,23 @@ To learn about the chip's architecture, see the [multiplexer documentation](http
 | `tt_um_uofa_traffic` | 1x1 | University of Arizona — smart traffic-light controller |
 | `tt_um_itims_spi` | 2x2 | HUST/ITIMS — secure SPI master |
 | `tt_um_necrl_aes128` | 4x2 | SFSU NeCRL — AES-128 peripheral |
+| `tt_um_vec_coproc` | 4x2 | UofA — PicoRV32 SIMD vector coprocessor |
+| `tt_um_bmi_soc` | 6x2 | UofA — BMI SoC |
+| `tt_um_bmu_soc` | 6x2 | UofA — BMU SoC |
+| `tt_um_mul_soc` | 8x2 | UofA — multiplier SoC |
+| `tt_um_gpio_soc` | 8x2 | UofA — GPIO SoC |
+| `tt_um_bp_soc` | 8x2 | UofA — branch predictor SoC |
+| `tt_um_vec_proc` | 8x2 | UofA — vector processor |
+| `tt_um_slm_dma` | 6x2 | SLM DMA engine |
+| `tt_um_slm_kv` | 6x2 | SLM KV-cache controller |
+| `tt_um_slm_softmax` | 8x2 | SLM softmax accelerator |
+| `tt_um_slm_cpu` | 8x2 | SLM RV32IM CPU |
+| `tt_um_slm_rmsnorm` | 8x2 | SLM RMSNorm accelerator |
 
-## Designs that cannot sit on the Tiny Tapeout mux
+## Designs not on this mux
 
-The same collection also has eight standalone LibreLane SoCs. They are DRC/LVS clean, but they were not hardened to Tiny Tapeout tile size or pin locations, so they cannot be assembled on this mux chip:
-
-| Design | Die | Why it does not fit |
-| --- | --- | --- |
-| `uofa-bmi-zane` | 0.49 × 0.50 mm | No `tt_um_*` wrapper; square die, not a TT tile |
-| `uofa-bmu-palma` | 0.49 × 0.50 mm | Same |
-| `uofa-vec-feng` | 0.40 × 0.41 mm | Same |
-| `uofa-bp-rumsey` | 1.40 × 1.41 mm | Larger than the max TT tile (8x4 is 1.38 × 0.51 mm) |
-| `uofa-gpio-gulvady` | 1.40 × 1.41 mm | Same |
-| `uofa-mul-colincore` | 1.39 × 1.40 mm | Same |
-| `uofa-vec-chakravarthy` | 1.42 × 1.43 mm | Same |
-| `slm-soc` | 2.58 × 2.59 mm | Same |
-
-Those SoCs would need a separate openframe/Caravel slot, or a re-harden into TT tiles, before they can tape out on this architecture.
+- `tt-slm-gemm` — skipped (original GEMM does not fit a TT tile; not hardened).
+- The original standalone SoC GDS from the collection still does not match TT pinout; the rows above are the re-hardened TT wrappers.
 
 ## Required macros
 

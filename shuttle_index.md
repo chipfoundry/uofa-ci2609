@@ -1,6 +1,6 @@
 # University of Arizona CI2609
 
-This repository contains the GDS file for the [University of Arizona CI2609](https://tinytapeout.com) project. It was generated from https://github.com/chipfoundry/uofa-ci2609.git@a1b28a91f5f8a953ff057d683cb054a62168e0b1.
+This repository contains the GDS file for the [University of Arizona CI2609](https://tinytapeout.com) project. It was generated from https://github.com/chipfoundry/uofa-ci2609.git@5e0ce2d2980857a3b642751ad947e6a5b6da9fad.
 
 ## Project Index
 
@@ -8,6 +8,18 @@ This repository contains the GDS file for the [University of Arizona CI2609](htt
 | ------- | ------ | ------| -----| ---------|
 | 0 | Uri Shaked | Chip ROM | HDL | https://github.com/TinyTapeout/tt-chip-rom |
 | 1 | Tiny Tapeout | Tiny Tapeout Factory Test | HDL | https://github.com/TinyTapeout/ttsky26c-factory-test |
-| 263 | Team ITIMS-Boys (HUST/ITIMS) | ITIMS Secure Autonomous SPI Master | HDL | https://github.com/parsamrf/AI-HDL-Tape-out-Chipfoundry |
-| 271 | Team NeCRL (Parsa Mirfasihi, Waylon Woo, Ethan Weldon) - SFSU | NeCRL AES-128 Encryption Peripheral | HDL | https://github.com/parsamrf/AI-HDL-Tape-out-Chipfoundry |
+| 46 | AI-HDL design team | Bit-Manipulation Co-Processor (PicoRV32 PCPI) | HDL | https://github.com/parsamrf/AI-HDL-Tape-out-Chipfoundry.git |
+| 110 | AI-HDL design team | SLM Softmax Accelerator Tile | HDL | https://github.com/parsamrf/AI-HDL-Tape-out-Chipfoundry.git |
+| 239 | AI-HDL design team | Neural Branch Predictor SoC (PicoRV32) | HDL | https://github.com/parsamrf/AI-HDL-Tape-out-Chipfoundry.git |
+| 271 | AI-HDL design team | Hardware Multiplier SoC (PicoRV32 PCPI) | HDL | https://github.com/parsamrf/AI-HDL-Tape-out-Chipfoundry.git |
+| 294 | AI-HDL design team | SIMD Vector Co-Processor (PicoRV32) | HDL | https://github.com/parsamrf/AI-HDL-Tape-out-Chipfoundry.git |
+| 302 | Team NeCRL (Parsa Mirfasihi, Waylon Woo, Ethan Weldon) - SFSU | NeCRL AES-128 Encryption Peripheral | HDL | https://github.com/parsamrf/AI-HDL-Tape-out-Chipfoundry |
+| 463 | AI-HDL design team | SLM SoC Tile: RV32IM CPU | HDL | https://github.com/parsamrf/AI-HDL-Tape-out-Chipfoundry.git |
+| 494 | AI-HDL design team | RISC-V GPIO SoC Self-Test | HDL | https://github.com/parsamrf/AI-HDL-Tape-out-Chipfoundry.git |
+| 526 | AI-HDL design team | SIMD Vector Processor (PicoRV32 PCPI) | HDL | https://github.com/parsamrf/AI-HDL-Tape-out-Chipfoundry.git |
+| 558 | AI-HDL design team | SLM RMSNorm Accelerator Tile | HDL | https://github.com/parsamrf/AI-HDL-Tape-out-Chipfoundry.git |
+| 618 | AI-HDL design team | Bit Manipulation Unit (PicoRV32 PCPI) | HDL | https://github.com/parsamrf/AI-HDL-Tape-out-Chipfoundry.git |
+| 622 | Team ITIMS-Boys (HUST/ITIMS) | ITIMS Secure Autonomous SPI Master | HDL | https://github.com/parsamrf/AI-HDL-Tape-out-Chipfoundry |
+| 655 | AI-HDL design team | SLM DMA Engine Tile | HDL | https://github.com/parsamrf/AI-HDL-Tape-out-Chipfoundry.git |
+| 715 | AI-HDL design team | SLM KV-Cache Controller Tile | HDL | https://github.com/parsamrf/AI-HDL-Tape-out-Chipfoundry.git |
 | 911 | Team Maestros (University of Arizona) | Maestros WiFi Smart Traffic-Light Controller | HDL | https://github.com/parsamrf/AI-HDL-Tape-out-Chipfoundry |

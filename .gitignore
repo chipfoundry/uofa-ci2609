@@ -7,5 +7,8 @@ sta.log
 # Auto generated foundry submission folder:
 foundry_submission/
 
+# Flattened wrapper GDS is ~473 MB (GitHub limit is 100 MB). OAS is committed instead.
+gds/openframe_project_wrapper.gds
+
 # pip-compile
 *.egg-info
