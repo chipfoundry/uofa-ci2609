@@ -32,10 +32,10 @@ To learn about the chip's architecture, see the [multiplexer documentation](http
 | `tt_um_slm_softmax` | 8x2 | SLM softmax accelerator |
 | `tt_um_slm_cpu` | 8x2 | SLM RV32IM CPU |
 | `tt_um_slm_rmsnorm` | 8x2 | SLM RMSNorm accelerator |
+| `tt_um_slm_gemm` | 8x4 | SLM INT8 8×8 systolic GEMM (huge_modules mux 21) |
 
 ## Designs not on this mux
 
-- `tt-slm-gemm` — skipped (original GEMM does not fit a TT tile; not hardened).
 - The original standalone SoC GDS from the collection still does not match TT pinout; the rows above are the re-hardened TT wrappers.
 
 ## Required macros

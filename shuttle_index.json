@@ -1,14 +1,14 @@
 {
   "name": "University of Arizona CI2609",
   "repo": "https://github.com/chipfoundry/uofa-ci2609.git",
-  "commit": "5e0ce2d2980857a3b642751ad947e6a5b6da9fad",
-  "commit_date": 1789057047,
+  "commit": "335ea14a408a8b8422e4ff68d5330903934ee694",
+  "commit_date": 1789590592,
   "layout": {
     "muxes": [
       [
         "digital",
         "digital",
-        "digital",
+        "",
         "digital",
         "digital",
         "digital",
@@ -197,6 +197,15 @@
       "tiles": "8x2",
       "repo": "https://github.com/parsamrf/AI-HDL-Tape-out-Chipfoundry.git",
       "commit": "cab51ace90aeb0d38133fdf2eb9d5b8f1ebbaa23"
+    },
+    {
+      "macro": "tt_um_slm_gemm",
+      "address": 814,
+      "x": 0,
+      "y": 28,
+      "tiles": "8x4",
+      "repo": "https://github.com/parsamrf/AI-HDL-Tape-out-Chipfoundry.git",
+      "commit": "4be992baad27f5c5cc45c99b5a718e75ec233082"
     }
   ]
 }

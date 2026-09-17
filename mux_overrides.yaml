@@ -1,2 +1,7 @@
-# Dedicated University of Arizona CI2609 chip — no public-shuttle mux overrides.
-tt: {}
+# Dedicated University of Arizona CI2609 chip.
+# Mux 21 is omitted so the 8x4 SLM GEMM tile can occupy the empty top band
+# (origin ~x=0,y=25). Analog muxes 11/12 stay as in sky130.yaml.
+tt:
+  huge_modules:
+    mux_id:
+      - 21
