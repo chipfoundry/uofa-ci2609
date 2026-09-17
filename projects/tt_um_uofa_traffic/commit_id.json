@@ -1,9 +1,7 @@
 {
-  "app": "uofa-ci2609 import",
-  "repo": "https://github.com/parsamrf/AI-HDL-Tape-out-Chipfoundry",
-  "commit": "a02bebb84456e48a6f411218cd36dfa155a9385a",
+  "app": "Tiny Tapeout master 61a23f39",
+  "repo": "https://github.com/parsamrf/AI-HDL-Tape-out-Chipfoundry.git",
+  "commit": "90db8fdadb4bc0d3bd94ce1a1410b3485123da32",
   "workflow_url": null,
-  "sort_id": 1779555000001,
-  "flow_version": "LibreLane 3.0.5",
-  "source_folder": "uofa-traffic"
+  "sort_id": 1789620561823
 }

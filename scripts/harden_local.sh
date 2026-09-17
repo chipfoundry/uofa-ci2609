@@ -4,9 +4,16 @@
 # Example: harden_local.sh tt-uofa-vec-coproc
 set -euo pipefail
 
-NAME="${1:?usage: harden_local.sh tt-uofa-vec-coproc}"
+NAME="${1:?usage: harden_local.sh <project-dir-name>}"
 ROOT="/Users/jeffdi/Projects/nydesign"
-SRC="$ROOT/_uofa_ci2609_src/tinytapeout/$NAME"
+if [[ -d "$ROOT/_uofa_ci2609_src/tinytapeout/$NAME" ]]; then
+  SRC="$ROOT/_uofa_ci2609_src/tinytapeout/$NAME"
+elif [[ -d "$ROOT/_uofa_ci2609_src/$NAME" ]]; then
+  SRC="$ROOT/_uofa_ci2609_src/$NAME"
+else
+  echo "missing source: $NAME" >&2
+  exit 1
+fi
 WORK="$ROOT/_tt_harden/$NAME"
 CHIP="$ROOT/uofa-ci2609"
 PY="$ROOT/nydesign-ci2605/.venv/bin/python"
