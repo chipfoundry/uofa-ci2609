@@ -1,6 +1,6 @@
 # University of Arizona CI2609
 
-This repository contains the GDS file for the [University of Arizona CI2609](https://tinytapeout.com) project. It was generated from https://github.com/chipfoundry/uofa-ci2609.git@5e0ce2d2980857a3b642751ad947e6a5b6da9fad.
+This repository contains the GDS file for the [University of Arizona CI2609](https://tinytapeout.com) project. It was generated from https://github.com/chipfoundry/uofa-ci2609.git@335ea14a408a8b8422e4ff68d5330903934ee694.
 
 ## Project Index
 
@@ -22,4 +22,5 @@ This repository contains the GDS file for the [University of Arizona CI2609](htt
 | 622 | Team ITIMS-Boys (HUST/ITIMS) | ITIMS Secure Autonomous SPI Master | HDL | https://github.com/parsamrf/AI-HDL-Tape-out-Chipfoundry |
 | 655 | AI-HDL design team | SLM DMA Engine Tile | HDL | https://github.com/parsamrf/AI-HDL-Tape-out-Chipfoundry.git |
 | 715 | AI-HDL design team | SLM KV-Cache Controller Tile | HDL | https://github.com/parsamrf/AI-HDL-Tape-out-Chipfoundry.git |
+| 814 | AI-HDL design team | SLM GEMM Engine Tile | HDL | https://github.com/parsamrf/AI-HDL-Tape-out-Chipfoundry.git |
 | 911 | Team Maestros (University of Arizona) | Maestros WiFi Smart Traffic-Light Controller | HDL | https://github.com/parsamrf/AI-HDL-Tape-out-Chipfoundry |

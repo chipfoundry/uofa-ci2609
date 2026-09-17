@@ -9,7 +9,7 @@ https://github.com/TinyTapeout/ttsky26c-factory-test
 #   itims-spi        tt_um_itims_spi        2x2  HUST/ITIMS
 #   necrl-aes128     tt_um_necrl_aes128     4x2  SFSU NeCRL
 #
-# Locally hardened Tiny Tapeout wrappers (skip GEMM):
+# Locally hardened Tiny Tapeout wrappers:
 #   tt_um_vec_coproc  4x2
 #   tt_um_bmi_soc     6x2
 #   tt_um_bmu_soc     6x2
@@ -22,4 +22,4 @@ https://github.com/TinyTapeout/ttsky26c-factory-test
 #   tt_um_slm_softmax 8x2
 #   tt_um_slm_cpu     8x2
 #   tt_um_slm_rmsnorm 8x2
-# GEMM skipped.
+#   tt_um_slm_gemm    8x4  (huge_modules mux 21)
