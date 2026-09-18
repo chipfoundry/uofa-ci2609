@@ -1,0 +1,3 @@
+2026-09-17 00:28:29 [INFO] Extracting compressed files in: /tmp/tmpwi5_zgqj/repo
+2026-09-17 00:28:29 [INFO] make uncompress produced 3 gds/*.gds file(s): tt_ctrl.gds, tt_mux.gds, tt_um_chip_rom.gds (make exit 0)
+2026-09-17 00:28:29 [CRITICAL] A single valid GDS was not found. Digital projects need 'gds/user_project_wrapper(.gds/.gds.gz)'. Analog projects need 'gds/user_analog_project_wrapper(.gds/.gds.gz)'.
